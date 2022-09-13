@@ -53,3 +53,44 @@
 | GET         | `/routines/:routineId` | READ    | render routine details page     |
 | GET         | `/exercises` | READ   | render exercises from search result |
 | GET         | `/exercises/:exerciseId` | READ    | render exercise details page  |
+
+## API
+
+* [wger Workout Manager REST API](https://wger.de/api/v2/)
+* No API key required to access public endpoints
+* Example axios request:
+```
+const express = require("express");
+const axios = require("axios");
+const app = express();
+const PORT = 3000;
+app.get("/", async (req, res) => {
+    try {
+        // increase results limit to max of 50,000
+        const response = await axios.get("https://wger.de/api/v2/exerciseinfo/?limit=50000");
+        // explicitly filter by english language since API filter method is broken for now
+        const filtered = response.data.results.filter(item => item.language.id === 2);
+        res.json(filtered);    // send json data
+    } 
+    catch (error) {
+        console.log(error);
+        res.send("error");
+    }
+})
+app.listen(PORT, () => {
+    console.log(`api-test express server running on port ${PORT}`);
+})
+```
+* .json results:<br>
+![API Results Count](./img/API_results_count.png)
+![API Results Head](./img/API_results_head.png)
+
+## Tech Stack
+* JavaScript
+* Node.js
+* Sequelize
+* PostgreSQL
+* Express
+* EJS
+* CSS
+* HTML5
