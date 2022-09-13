@@ -88,12 +88,12 @@ app.listen(PORT, () => {
 ## Tech Stack
 * JavaScript
 * Node.js
-* Sequelize
 * PostgreSQL
-* Express
-* EJS
 * CSS
 * HTML5
+* Sequelize
+* Express
+* EJS
 
 ## Minimum Viable Product (MVP) Goals
 * [ ] Create Routine and Exercise models w/ attributes
@@ -101,6 +101,7 @@ app.listen(PORT, () => {
 * [ ] Render users, routines, and exercises GET routes
 * [ ] Implement POST, PUT, and DELETE routes for users and routines
 * [ ] Incorporate wger Workout Manager REST API for exercise data
+* [ ] Search for exercises from API to add to routines
 * [ ] Working user authentication and authorization
 * [ ] Incorrect login management
 * [ ] Password information is securely handled
@@ -113,3 +114,9 @@ app.listen(PORT, () => {
 * [ ] Dark mode
 * [ ] Incorporate Spotify API to add a music playlist to routines (1:M)
 * [ ] Add a M:M relationship for Routine and a new Tag model for better organization
+* [ ] Implement more search categories (e.g. by routine titles)
+* [ ] Add About page and other links
+* [ ] Save other users' routines to your own (view only vs. copy?)
+* [ ] Add option to write notes on each exercise in routine
+* [ ] A nice logo referencing wings for the latissimus dorsi muscle
+* [ ] Update README.md Wireframes, ERD, and Routes as projects evolves
