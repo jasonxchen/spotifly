@@ -94,3 +94,22 @@ app.listen(PORT, () => {
 * EJS
 * CSS
 * HTML5
+
+## Minimum Viable Product (MVP) Goals
+* [ ] Create Routine and Exercise models w/ attributes
+* [ ] Associate 1:M and M:M relationships for User and Routine models, and Routine and Exercise models respectively
+* [ ] Render users, routines, and exercises GET routes
+* [ ] Implement POST, PUT, and DELETE routes for users and routines
+* [ ] Incorporate wger Workout Manager REST API for exercise data
+* [ ] Working user authentication and authorization
+* [ ] Incorrect login management
+* [ ] Password information is securely handled
+* [ ] Encrypt necessary cookies
+* [ ] Minimal CSS styling
+* [ ] No bugs
+
+## Stretch Goals
+* [ ] More CSS styling
+* [ ] Dark mode
+* [ ] Incorporate Spotify API to add a music playlist to routines (1:M)
+* [ ] Add a M:M relationship for Routine and a new Tag model for better organization
