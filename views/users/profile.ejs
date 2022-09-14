@@ -1,1 +1,6 @@
-<h2>Welcome to your profile <%= user.username %>!</h2>
+<h2>Welcome to <%= user.username %>'s profile!</h2>
+
+<% user.routines.forEach(routine => { %>
+    <h3><%= routine.title %> by <%= user.username %></h3>
+    <p><%= routine.description %></p>
+<% }) %>

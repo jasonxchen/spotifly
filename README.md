@@ -121,3 +121,4 @@ app.listen(PORT, () => {
 * [ ] A nice logo referencing wings for the latissimus dorsi muscle
 * [ ] Update README.md Wireframes, ERD, and Routes as projects evolves
 * [ ] Use modals instead of /new pages
+* [ ] Have template error page for error catches instead of res.send()

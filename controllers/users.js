@@ -83,12 +83,30 @@ router.get("/logout", (req, res) => {
     res.redirect("/");
 })
 // GET /users/profile
-router.get("/profile", (req,res) => {    // To do: /profile/:username
+router.get("/profile", (req,res) => {    // broken link; To do: redirect to related /users/:username route OR remove route OR refactor into settings page
     if (!res.locals.user) {
         res.redirect("/users/login?message=You must authenticate before you are authorized to view this resource.");
     }
     else {
         res.render("users/profile.ejs", {user: res.locals.user});
+    }
+})
+// GET /users/:username - public details about a user
+router.get("/:username", async (req, res) => {
+    try {
+        const user = await db.user.findOne(
+        {
+            where:
+            {
+                username: req.params.username
+            },
+            include: [db.routine]
+        }) 
+        res.render("users/profile.ejs", {user});
+    } 
+    catch (error) {
+        console.log(error);
+        res.send("server error");
     }
 })
 
