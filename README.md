@@ -103,9 +103,9 @@ app.listen(PORT, () => {
 * [ ] Incorporate wger Workout Manager REST API for exercise data
 * [ ] Search for exercises from API to add to routines
 * [ ] Working user authentication and authorization
-* [ ] Incorrect login management
-* [ ] Password information is securely handled
-* [ ] Encrypt necessary cookies
+* [x] Incorrect login management
+* [x] Password information is securely handled
+* [x] Encrypt necessary cookies
 * [ ] Minimal CSS styling
 * [ ] No bugs
 

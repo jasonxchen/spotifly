@@ -6,7 +6,7 @@ const router = express.Router();
 
 // GET /users/new - form to create new user
 router.get("/new", (req, res) => {
-    res.send("render /views/users/new.ejs");
+    res.render("users/new.ejs");
 })
 // POST /users - create user in db
 router.post("/", async (req, res) => {
@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
 })
 // GET /users/login - show a login form to user
 router.get("/login", (req, res) => {
-    res.send("render views/users/login.ejs", {
+    res.render("users/login.ejs", {
         // potenitally receive login error message
         message: req.query.message ? req.query.message : null
     });
@@ -50,7 +50,8 @@ router.post("/login", async (req, res) => {
         // look up user in the db using the supplied email
         const user = await db.user.findOne({
             where: {
-                username: req.body.username
+                // To do: log in with either username or email
+                email: req.body.email
             }
         })
         const incorrectLogin = "Incorrect username or password";    // default error message
