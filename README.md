@@ -101,7 +101,7 @@ app.listen(PORT, () => {
 * [ ] Render users, routines, and exercises GET routes
 * [ ] Implement POST, PUT, and DELETE routes for users and routines
 * [ ] Incorporate wger Workout Manager REST API for exercise data
-* [ ] Search for exercises from API to add to routines
+* [ ] "Add to routine" functionality for exercises from API
 * [ ] Working user authentication and authorization
 * [x] Incorrect login management
 * [x] Password information is securely handled
@@ -110,6 +110,7 @@ app.listen(PORT, () => {
 * [ ] No bugs
 
 ## Stretch Goals
+* [ ] Search for exercises from API results
 * [ ] More CSS styling
 * [ ] Dark mode
 * [ ] Incorporate Spotify API to add a music playlist to routines (1:M)

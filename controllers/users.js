@@ -92,6 +92,7 @@ router.get("/profile", (req,res) => {    // broken link; To do: redirect to rela
     }
 })
 // GET /users/:username - public details about a user
+// To do: manage what happens for user with username "login", "new", etc.
 router.get("/:username", async (req, res) => {
     try {
         const user = await db.user.findOne(
