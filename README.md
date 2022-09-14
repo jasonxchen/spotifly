@@ -123,3 +123,4 @@ app.listen(PORT, () => {
 * [ ] Use modals instead of /new pages
 * [ ] Have template error page for error catches instead of res.send()
 * [ ] Hash/encrypt IDs in URL
+* [ ] Allow pagination of exercises on exercises/index.ejs view to cut down on API request time

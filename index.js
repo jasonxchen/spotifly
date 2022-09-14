@@ -29,6 +29,7 @@ app.use(async (req, res, next) => {
 // controllers
 app.use("/users", require("./controllers/users"));
 app.use("/routines", require("./controllers/routines"));
+app.use("/exercises", require("./controllers/exercises"));
 
 // routes
 app.get("/", (req, res) => {

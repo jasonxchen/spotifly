@@ -1,0 +1,21 @@
+<h2>List of exercises from wger Workout Manager:</h2>
+
+<% exercises.forEach(exercise => { %>
+    <h3><%= exercise.name %></h3>
+    <% let description = exercise.description %>
+    <!-- remove HTML elements from description key in API response.data.results (aka "exercises" variable) -->
+    <% description = description.replaceAll("<p>", "").replaceAll("</p>", ""); %>
+    <% description = description.replaceAll("<em>", "").replaceAll("</em>", ""); %>
+    <% description = description.replaceAll("<li>", "").replaceAll("</li>", ""); %>
+    <% description = description.replaceAll("<ul>", "").replaceAll("</ul>", ""); %>
+    <% description = description.replaceAll("<ol>", "").replaceAll("</ol>", ""); %>
+    <% description = description.replaceAll("<strong>", "").replaceAll("</strong>", ""); %>
+    <p><%= description %></p>
+    <p>Muscle group: <%= exercise.category.name %></p>
+    <p>Equipment: </p>
+    <ul>
+        <% exercise.equipment.forEach(equipment => { %>
+            <li><%= equipment.name %></li>
+        <% }) %>
+    </ul>
+<% }) %>
