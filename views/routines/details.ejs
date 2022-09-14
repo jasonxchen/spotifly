@@ -1,3 +1,10 @@
 <h2><%= routine.title %></h2>
 <h3>brought to you by: <%= routine.user.username %></h3>
 <p><%= routine.description %></p>
+
+<% routine.exercises.forEach(exercise => { %>
+    <h4><%= exercise.name %></h4>
+    <p>Description: <%= exercise.description %></p>
+    <p>Muscle category: <%= exercise.category %></p>
+    <p>Equipment needed: <%= exercise.equipment %></p>
+<% }) %>
