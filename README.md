@@ -96,8 +96,8 @@ app.listen(PORT, () => {
 * EJS
 
 ## Minimum Viable Product (MVP) Goals
-* [ ] Create Routine and Exercise models w/ attributes
-* [ ] Associate 1:M and M:M relationships for User and Routine models, and Routine and Exercise models respectively
+* [x] Create Routine and Exercise models w/ attributes
+* [x] Associate 1:M and M:M relationships for User and Routine models, and Routine and Exercise models respectively
 * [ ] Render users, routines, and exercises GET routes
 * [ ] Implement POST, PUT, and DELETE routes for users and routines
 * [ ] Incorporate wger Workout Manager REST API for exercise data
