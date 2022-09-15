@@ -25,21 +25,26 @@
         <% }) %>
     </ul>
 
-    <form action="/exercises" method="POST">
-        <!-- values needed to create a new exercise record -->
-        <input type="hidden" name="exerciseId" value="<%= exercise.id %>">
-        <input type="hidden" name="exerciseName" value="<%= exercise.name %>">
-        <input type="hidden" name="exerciseDesc" value="<%= description %>">
-        <input type="hidden" name="exerciseCategory" value="<%= exercise.category.name %>">
-        <input type="hidden" name="exerciseEquip" value="<%= equipmentList %>">
-        
-        <label for="routine-id">Choose a routine:</label>
-        <select id="routine-id" name="routineId">
-            <% user.routines.forEach(routine => { %>
-                <option value="<%= routine.id %>"><%= routine.title %></option>
-            <% }) %>
-        </select>
-        <button type="submit">Add</button>
-    </form>
+    <!-- anon visitors can see this page, but only users can send POST requests -->
+    <!-- To do: (reconsider) possible issue w/ excessive axios GET requests from anon visitors -->
+    <% if (user) { %>
+        <form action="/exercises" method="POST">
+            <!-- values needed to create a new exercise record -->
+            <input type="hidden" name="exerciseId" value="<%= exercise.id %>">
+            <input type="hidden" name="exerciseName" value="<%= exercise.name %>">
+            <input type="hidden" name="exerciseDesc" value="<%= description %>">
+            <input type="hidden" name="exerciseCategory" value="<%= exercise.category.name %>">
+            <input type="hidden" name="exerciseEquip" value="<%= equipmentList %>">
+            
+            <label for="routine-id">Choose a routine:</label>
+            <select id="routine-id" name="routineId">
+                <% user.routines.forEach(routine => { %>
+                    <option value="<%= routine.id %>"><%= routine.title %></option>
+                <% }) %>
+            </select>
+            <button type="submit">Add</button>
+        </form>
+    <% } %>
+
     <br>
 <% }) %>

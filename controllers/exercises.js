@@ -3,6 +3,7 @@ const db = require("../models");
 const axios = require("axios");
 const router = express.Router();
 
+// GET /exercises - list of exercises from wger Workout Manager
 router.get("/", async (req, res) => {
     try {
         // response data only has <= 60 results for testing speed...
@@ -16,6 +17,7 @@ router.get("/", async (req, res) => {
         res.send("server error");
     }
 })
+// POST /exercises - find or create exercise record of interest and add it relationally to the routine selected
 router.post("/", async (req, res) => {
     try {
         const routine = await db.routine.findByPk(req.body.routineId);
