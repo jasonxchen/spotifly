@@ -1,5 +1,9 @@
 <h2><%= routine.title %></h2>
-<h3>brought to you by: <%= routine.user.username %></h3>
+<h3>brought to you by: 
+    <a href="/users/<%= routine.user.username %>">
+        <%= routine.user.username %>
+    </a>
+</h3>
 <p><%= routine.description %></p>
 
 <% routine.exercises.forEach(exercise => { %>
