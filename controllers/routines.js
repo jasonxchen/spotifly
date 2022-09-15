@@ -70,8 +70,8 @@ router.post("/", async (req, res) => {
 router.put("/:routineId", async (req, res) => {
     try {
         const routine = await db.routine.findByPk(req.params.routineId);
-        if (!res.locals.user && res.locals.user.id !== routine.userId) {
-            // send error message if user is not logged-in AND the owner, and is trying to send a request via other avenues
+        if (!res.locals.user || res.locals.user.id !== routine.userId) {
+            // send error message if user is not logged-in OR the owner, and is trying to send a request via other avenues
             res.send("Error 405 (Method Not Allowed)!");
         }
         else {
@@ -80,6 +80,28 @@ router.put("/:routineId", async (req, res) => {
                 description: req.body.description
             })
             await routine.save();
+            res.redirect(`/routines/${routine.id}`);
+        }
+    } 
+    catch (error) {
+        console.warn(error);
+        res.send("server error");
+    }
+})
+// DELETE /routines/:routineId/exercises - remove an association of a specific exercise to a routine with routineId
+router.delete("/:routineId/exercises", async (req, res) => {
+    try {
+        const routine = await db.routine.findByPk(req.params.routineId);
+        if (!res.locals.user || res.locals.user.id !== routine.userId) {
+            // send error message if user is not logged-in OR the owner, and is trying to send a request via other avenues
+            res.send("Error 405 (Method Not Allowed)!");
+        }
+        else {
+            const exercise = await db.exercise.findByPk(req.body.exerciseId);
+            await routine.removeExercise(exercise);
+            // manually change updatedAt for routine ordering purposes
+            routine.changed("updatedAt", true)
+            await routine.update({updatedAt: new Date()})
             res.redirect(`/routines/${routine.id}`);
         }
     } 

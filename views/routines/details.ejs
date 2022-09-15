@@ -15,4 +15,12 @@
     <p>Description: <%= exercise.description %></p>
     <p>Muscle group: <%= exercise.category %></p>
     <p>Equipment needed: <%= exercise.equipment %></p>
+    <% // only show remove button for owner %>
+    <% if(user && user.id === routine.userId) { %>
+        <form action="/routines/<%= routine.id %>/exercises/?_method=DELETE" method="POST">
+            <input type="hidden" name="exerciseId" value="<%= exercise.id %>">
+            <button type="submit">Remove</button>
+        </form>
+    <% }%>
+    <br>
 <% }) %>

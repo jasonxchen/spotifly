@@ -44,6 +44,9 @@ router.post("/", async (req, res) => {
             })
             console.log(`New exercise imported: ${exerciseCreated}`);
             await routine.addExercise(exercise);
+            // manually change updatedAt for routine ordering purposes
+            routine.changed("updatedAt", true)
+            await routine.update({updatedAt: new Date()})
             res.redirect(`/routines/${routine.id}`);
         }
     } 
