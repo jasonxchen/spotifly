@@ -66,5 +66,27 @@ router.post("/", async (req, res) => {
         res.send("server error");
     }
 })
+// PUT /routines/:routineId - update routine in db
+router.put("/:routineId", async (req, res) => {
+    try {
+        const routine = await db.routine.findByPk(req.params.routineId);
+        if (!res.locals.user && res.locals.user.id !== routine.userId) {
+            // send error message if user is not logged-in AND the owner, and is trying to send a request via other avenues
+            res.send("Error 405 (Method Not Allowed)!");
+        }
+        else {
+            routine.set({
+                title: req.body.title,
+                description: req.body.description
+            })
+            await routine.save();
+            res.redirect(`/routines/${routine.id}`);
+        }
+    } 
+    catch (error) {
+        console.warn(error);
+        res.send("server error");
+    }
+})
 
 module.exports = router;

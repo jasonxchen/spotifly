@@ -101,7 +101,9 @@ router.get("/:username", async (req, res) => {
             {
                 username: req.params.username
             },
-            include: [db.routine]
+            include: [db.routine],
+            // have most recently updated routines at the top of profile
+            order: [[db.routine, "updatedAt", "DESC"]]
         }) 
         res.render("users/profile.ejs", {user});
     } 
