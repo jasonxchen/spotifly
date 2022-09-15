@@ -31,12 +31,18 @@ router.get("/:routineId", async (req, res) => {
 // POST /routines - create routine associated w/ logged-in user in db
 router.post("/", async (req, res) => {
     try {
-        const routine = await db.routine.create({
-            title: req.body.title,
-            description: req.body.description,
-            userId: res.locals.user.id
-        })
-        res.redirect(`/routines/${routine.id}`);
+        if (!res.locals.user) {
+            // send error message if user is not logged-in and trying to send a request via other avenues
+            res.send("Error 405 (Method Not Allowed)!");
+        }
+        else {
+            const routine = await db.routine.create({
+                title: req.body.title,
+                description: req.body.description,
+                userId: res.locals.user.id
+            })
+            res.redirect(`/routines/${routine.id}`);
+        }
     } 
     catch (error) {
         console.warn(error);

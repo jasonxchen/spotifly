@@ -20,26 +20,32 @@ router.get("/", async (req, res) => {
 // POST /exercises - find or create exercise record of interest and add it relationally to the routine selected
 router.post("/", async (req, res) => {
     try {
-        const routine = await db.routine.findByPk(req.body.routineId);
-        const exerciseId = req.body.exerciseId;
-        const exerciseName = req.body.exerciseName;
-        const exerciseDesc = req.body.exerciseDesc;
-        const exerciseCategory = req.body.exerciseCategory;
-        const exerciseEquip = req.body.exerciseEquip;
-        const [exercise, exerciseCreated] = await db.exercise.findOrCreate({
-            where: {
-                id: exerciseId
-            },
-            defaults: {
-                name: exerciseName,
-                description: exerciseDesc,
-                category: exerciseCategory,
-                equipment: exerciseEquip
-            }
-        })
-        console.log(`New exercise imported: ${exerciseCreated}`);
-        await routine.addExercise(exercise);
-        res.redirect(`/routines/${routine.id}`);
+        if (!res.locals.user) {
+            // send error message if user is not logged-in and trying to send a request via other avenues
+            res.send("Error 405 (Method Not Allowed)!");
+        }
+        else {
+            const routine = await db.routine.findByPk(req.body.routineId);
+            const exerciseId = req.body.exerciseId;
+            const exerciseName = req.body.exerciseName;
+            const exerciseDesc = req.body.exerciseDesc;
+            const exerciseCategory = req.body.exerciseCategory;
+            const exerciseEquip = req.body.exerciseEquip;
+            const [exercise, exerciseCreated] = await db.exercise.findOrCreate({
+                where: {
+                    id: exerciseId
+                },
+                defaults: {
+                    name: exerciseName,
+                    description: exerciseDesc,
+                    category: exerciseCategory,
+                    equipment: exerciseEquip
+                }
+            })
+            console.log(`New exercise imported: ${exerciseCreated}`);
+            await routine.addExercise(exercise);
+            res.redirect(`/routines/${routine.id}`);
+        }
     } 
     catch (error) {
         console.warn(error);

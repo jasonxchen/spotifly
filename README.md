@@ -124,3 +124,4 @@ app.listen(PORT, () => {
 * [ ] Have template error page for error catches instead of res.send()
 * [ ] Hash/encrypt IDs in URL
 * [ ] Allow pagination of exercises on exercises/index.ejs view to cut down on API request time
+* [ ] Replace "Error 405" res.send() messages with something more standard (see google.com)
