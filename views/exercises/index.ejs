@@ -3,7 +3,7 @@
 <% exercises.forEach(exercise => { %>
     <h3><%= exercise.name %></h3>
     <% let description = exercise.description %>
-    <!-- remove HTML elements from description key in API response.data.results (aka "exercises" variable) -->
+    <% // remove HTML elements from description key in API response.data.results (aka "exercises" variable) %>
     <% description = description.replaceAll("<p>", "").replaceAll("</p>", ""); %>
     <% description = description.replaceAll("<em>", "").replaceAll("</em>", ""); %>
     <% description = description.replaceAll("<li>", "").replaceAll("</li>", ""); %>
@@ -25,11 +25,11 @@
         <% }) %>
     </ul>
 
-    <!-- anon visitors can see this page, but only users can send POST requests -->
-    <!-- To do: (reconsider) possible issue w/ excessive axios GET requests from anon visitors -->
+    <% // anon visitors can see this page, but only users can send POST requests %>
+    <% // To do: (reconsider) possible issue w/ excessive axios GET requests from anon visitors %>
     <% if (user) { %>
         <form action="/exercises" method="POST">
-            <!-- values needed to create a new exercise record -->
+            <% //values needed to create a new exercise record %>
             <input type="hidden" name="exerciseId" value="<%= exercise.id %>">
             <input type="hidden" name="exerciseName" value="<%= exercise.name %>">
             <input type="hidden" name="exerciseDesc" value="<%= description %>">
