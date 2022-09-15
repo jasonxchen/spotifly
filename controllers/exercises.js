@@ -16,5 +16,33 @@ router.get("/", async (req, res) => {
         res.send("server error");
     }
 })
+router.post("/", async (req, res) => {
+    try {
+        const routine = await db.routine.findByPk(req.body.routineId);
+        const exerciseId = req.body.exerciseId;
+        const exerciseName = req.body.exerciseName;
+        const exerciseDesc = req.body.exerciseDesc;
+        const exerciseCategory = req.body.exerciseCategory;
+        const exerciseEquip = req.body.exerciseEquip;
+        const [exercise, exerciseCreated] = await db.exercise.findOrCreate({
+            where: {
+                id: exerciseId
+            },
+            defaults: {
+                name: exerciseName,
+                description: exerciseDesc,
+                category: exerciseCategory,
+                equipment: exerciseEquip
+            }
+        })
+        console.log(`New exercise imported: ${exerciseCreated}`);
+        await routine.addExercise(exercise);
+        res.redirect(`/routines/${routine.id}`);
+    } 
+    catch (error) {
+        console.warn(error);
+        res.send("server error");
+    }
+})
 
 module.exports = router;

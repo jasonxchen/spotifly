@@ -17,7 +17,7 @@ app.use(async (req, res, next) => {
     if (req.cookies.userId) {
         let decryptedUserId = crypto.AES.decrypt(req.cookies.userId.toString(), process.env.ENC_SECRET)
         decryptedUserId = decryptedUserId.toString(crypto.enc.Utf8);
-        const user = await db.user.findByPk(decryptedUserId);    // To do: refactor code to use "currUser" instead of "user"
+        const user = await db.user.findByPk(decryptedUserId, {include: [db.routine]});    // To do: refactor code to use "currUser" instead of "user"
         res.locals.user = user;    // supply all routes downstream with a sequelize instance of logged in user
     }
     else {

@@ -13,9 +13,33 @@
     <p><%= description %></p>
     <p>Muscle group: <%= exercise.category.name %></p>
     <p>Equipment: </p>
+    <% let equipmentList = ""; %>
     <ul>
-        <% exercise.equipment.forEach(equipment => { %>
+        <% exercise.equipment.forEach((equipment, index) => { %>
             <li><%= equipment.name %></li>
+            <% if (index === 0) { %>
+                <% equipmentList += equipment.name; %>
+            <% } else { %>
+                <% equipmentList += `, ${equipment.name}`; %>
+            <% } %>
         <% }) %>
     </ul>
+
+    <form action="/exercises" method="POST">
+        <!-- values needed to create a new exercise record -->
+        <input type="hidden" name="exerciseId" value="<%= exercise.id %>">
+        <input type="hidden" name="exerciseName" value="<%= exercise.name %>">
+        <input type="hidden" name="exerciseDesc" value="<%= description %>">
+        <input type="hidden" name="exerciseCategory" value="<%= exercise.category.name %>">
+        <input type="hidden" name="exerciseEquip" value="<%= equipmentList %>">
+        
+        <label for="routine-id">Choose a routine:</label>
+        <select id="routine-id" name="routineId">
+            <% user.routines.forEach(routine => { %>
+                <option value="<%= routine.id %>"><%= routine.title %></option>
+            <% }) %>
+        </select>
+        <button type="submit">Add</button>
+    </form>
+    <br>
 <% }) %>
