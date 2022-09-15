@@ -4,6 +4,10 @@
         <%= routine.user.username %>
     </a>
 </h3>
+<% // only show edit link for owner %>
+<% if(user && user.id === routine.userId) { %>
+    <a href="/routines/edit/<%= routine.id %>">Edit details</a>
+<% }%>
 <p><%= routine.description %></p>
 
 <% routine.exercises.forEach(exercise => { %>

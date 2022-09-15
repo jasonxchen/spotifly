@@ -28,6 +28,23 @@ router.get("/:routineId", async (req, res) => {
         res.send("server error");
     }
 })
+// GET /routines/edit/:routineId - form to edit a routine
+router.get("/edit/:routineId", async (req, res) => {
+    try {
+        const routine = await db.routine.findByPk(req.params.routineId);
+        if (res.locals.user && res.locals.user.id === routine.userId) {
+            res.render("routines/edit.ejs", {routine});
+        }
+        else {
+            // redirect back to details page if user is not the owner of specified routine and trying to access url
+            res.redirect(`/routines/${req.params.routineId}`);
+        }
+    }
+    catch (error) {
+        console.warn(error);
+        res.send("server error");
+    }
+})
 // POST /routines - create routine associated w/ logged-in user in db
 router.post("/", async (req, res) => {
     try {

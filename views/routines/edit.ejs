@@ -1,0 +1,7 @@
+<form action="/routines/<%= routine.id %>/?_method=PUT" method="POST">
+    <label for="title">Title:</label>
+    <input id="title" type="text" name="title" value="<%= routine.title %>" required>
+    <label for="description">Description:</label>
+    <textarea id="description" type="text" name="description"><%= routine.description %></textarea>
+    <button type="submit">Save</button>
+</form>

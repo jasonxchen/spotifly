@@ -120,7 +120,7 @@ app.listen(PORT, () => {
 * [ ] Add option to write notes on each exercise in routine
 * [ ] A nice logo referencing wings for the latissimus dorsi muscle
 * [ ] Update README.md Wireframes, ERD, and Routes as projects evolves
-* [ ] Use modals instead of /new pages
+* [ ] Use modals instead of /new and /edit pages
 * [ ] Have template error page for error catches instead of res.send()
 * [ ] Hash/encrypt IDs in URL
 * [ ] Allow pagination of exercises on exercises/index.ejs view to cut down on API request time

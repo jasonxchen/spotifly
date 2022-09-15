@@ -5,6 +5,7 @@ const ejsLayouts = require("express-ejs-layouts");
 const db = require("./models");
 const cookieParser = require("cookie-parser");
 const crypto = require("crypto-js");
+const methodOverrive = require("method-override");
 
 // config express app/middlewares
 const app = express();
@@ -13,6 +14,7 @@ app.set("view engine", "ejs");
 app.use(ejsLayouts);
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use(methodOverrive("_method"));
 app.use(async (req, res, next) => {
     if (req.cookies.userId) {
         let decryptedUserId = crypto.AES.decrypt(req.cookies.userId.toString(), process.env.ENC_SECRET)
