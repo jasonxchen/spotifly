@@ -98,7 +98,7 @@ app.listen(PORT, () => {
 ## Minimum Viable Product (MVP) Goals
 * [x] Create Routine and Exercise models w/ attributes
 * [x] Associate 1:M and M:M relationships for User and Routine models, and Routine and Exercise models respectively
-* [ ] Render users, routines, and exercises GET routes
+* [x] Render users, routines, and exercises GET routes
 * [x] Implement POST, PUT, and DELETE routes for users and routines
 * [x] "Add to routine" functionality for exercises from wger's Workout Manager REST API
 * [x] Working user authentication and authorization
@@ -106,7 +106,6 @@ app.listen(PORT, () => {
 * [x] Password information is securely handled
 * [x] Encrypt necessary cookies
 * [ ] Minimal CSS styling
-* [ ] No bugs
 
 ## Stretch Goals
 * [ ] Search for exercises from API results
