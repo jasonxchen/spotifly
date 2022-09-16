@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
             // on successful login
             const encryptedUserId = crypto.AES.encrypt(newUser.id.toString(), process.env.ENC_SECRET);
             res.cookie("userId", encryptedUserId.toString());
-            res.redirect("/users/profile");
+            res.redirect(`/users/${newUser.username}`);
         }
     } 
     catch (error) {
@@ -69,7 +69,7 @@ router.post("/login", async (req, res) => {
         else {
             const encryptedUserId = crypto.AES.encrypt(user.id.toString(), process.env.ENC_SECRET);
             res.cookie("userId", encryptedUserId.toString());
-            res.redirect("/users/profile");
+            res.redirect(`/users/${user.username}`);
         }
     } 
     catch (error) {
@@ -83,7 +83,7 @@ router.get("/logout", (req, res) => {
     res.redirect("/");
 })
 // GET /users/profile
-router.get("/profile", (req,res) => {    // To do: redirect to related /users/:username route OR remove route OR refactor into settings page
+router.get("/profile", (req,res) => {    // borken again; To do: redirect to related /users/:username route OR remove route OR refactor into settings page
     if (!res.locals.user) {
         res.redirect("/users/login?message=You must authenticate before you are authorized to view this resource.");
     }
@@ -95,7 +95,7 @@ router.get("/profile", (req,res) => {    // To do: redirect to related /users/:u
 // To do: manage what happens for user with username "login", "new", etc.
 router.get("/:username", async (req, res) => {
     try {
-        const user = await db.user.findOne(
+        const publicUser = await db.user.findOne(
         {
             where:
             {
@@ -105,7 +105,7 @@ router.get("/:username", async (req, res) => {
             // have most recently updated routines at the top of profile
             order: [[db.routine, "updatedAt", "DESC"]]
         }) 
-        res.render("users/profile.ejs", {user});
+        res.render("users/profile.ejs", {publicUser});
     } 
     catch (error) {
         console.log(error);

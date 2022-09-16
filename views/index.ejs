@@ -1,1 +1,6 @@
-<h2>Welcome Home</h2>
+<h2>Explore:</h2>
+
+<% routines.forEach(routine => { %>
+    <h3><a href="/routines/<%= routine.id %>"><%= routine.title %> by <%= routine.user.username %></a></h3>
+    <p><%= routine.description %></p>
+<% }) %>

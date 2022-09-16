@@ -38,8 +38,19 @@ app.use("/routines", require("./controllers/routines"));
 app.use("/exercises", require("./controllers/exercises"));
 
 // routes
-app.get("/", (req, res) => {
-    res.render("index.ejs");
+app.get("/", async (req, res) => {
+    try {
+        // To do: render older routines later (i.e. facebook feed scrolling) and/or hard limit
+        const routines = await db.routine.findAll({
+            include: [db.user],
+            order: [["updatedAt", "DESC"]]
+        });
+        res.render("index.ejs", {routines});
+    } 
+    catch (error) {
+        console.warn(error);
+        res.send("server error");
+    }
 })
 app.get("/settings", (req, res) => {
     if (!res.locals.user) {
