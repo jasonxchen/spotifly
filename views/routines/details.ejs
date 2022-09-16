@@ -4,11 +4,16 @@
         <%= routine.user.username %>
     </a>
 </h3>
-<% // only show edit link for owner %>
+<p><%= routine.description %></p>
+
+<% // only show Edit and Delete for owner %>
 <% if(user && user.id === routine.userId) { %>
     <a href="/routines/edit/<%= routine.id %>">Edit details</a>
-<% }%>
-<p><%= routine.description %></p>
+    <form action="/routines/?_method=DELETE" method="POST" style="display: inline-block">
+        <input type="hidden" name="routineId" value="<%= routine.id %>">
+        <button type="submit">Delete</button>
+    </form>
+<% } %>
 
 <% routine.exercises.forEach(exercise => { %>
     <h4><%= exercise.name %></h4>

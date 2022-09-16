@@ -88,6 +88,32 @@ router.put("/:routineId", async (req, res) => {
         res.send("server error");
     }
 })
+// DELETE /routines - delete a routine from db
+router.delete("/", async (req, res) => {
+    try {
+        const routine = await db.routine.findByPk(req.body.routineId);
+        if (!res.locals.user || res.locals.user.id !== routine.userId) {
+            // send error message if user is not logged-in OR the owner, and is trying to send a request via other avenues
+            res.send("Error 405 (Method Not Allowed)!");
+        }
+        else {
+            const routinesExercises = await db.routines_exercises.findAll({
+                where: {
+                    routineId: routine.id
+                }
+            })
+            await routinesExercises.forEach(record => {
+                record.destroy();
+            })
+            await routine.destroy();
+            res.redirect(`/users/${res.locals.user.username}`);
+        }
+    } 
+    catch (error) {
+        console.warn(error);
+        res.send("server error");
+    }
+})
 // DELETE /routines/:routineId/exercises - remove an association of a specific exercise to a routine with routineId
 router.delete("/:routineId/exercises", async (req, res) => {
     try {
