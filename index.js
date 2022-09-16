@@ -41,6 +41,14 @@ app.use("/exercises", require("./controllers/exercises"));
 app.get("/", (req, res) => {
     res.render("index.ejs");
 })
+app.get("/settings", (req, res) => {
+    if (!res.locals.user) {
+        res.redirect("/users/login");
+    }
+    else {
+        res.render("settings.ejs");
+    }
+})
 
 // listen
 app.listen(PORT, () => {

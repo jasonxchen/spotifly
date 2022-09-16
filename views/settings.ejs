@@ -1,0 +1,11 @@
+<h2>Update user settings</h2>
+
+<form action="/users/?_method=PUT" method="POST">
+    <label for="username">Username:</label>
+    <input id="username" type="text" name="username" value="<%= user.username %>" required>
+    <label for="email">Email:</label>
+    <input id="email" type="email" name="email" value="<%= user.email %>" required>
+    <label for="password">Password:</label>
+    <input id="password" type="password" name="password" required>
+    <button type="submit">Save</button>
+</form>

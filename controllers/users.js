@@ -112,5 +112,30 @@ router.get("/:username", async (req, res) => {
         res.send("server error");
     }
 })
+// PUT /users - update user in db
+router.put("/", async (req, res) => {
+    try {
+        if (!res.locals.user) {
+            // send error message if user is not logged-in and trying to send a request via other avenues
+            res.send("Error 405 (Method Not Allowed)!");
+        }
+        else {
+            const hashedPassword = bcrypt.hashSync(req.body.password, 12);
+            const user = await db.user.findByPk(res.locals.user.id);
+            user.set({
+                // To do: handle duplicate usernames/email, make pw change more secure, and separate changes (not all at once)
+                username: req.body.username,
+                email: req.body.email,
+                password: hashedPassword
+            })
+            await user.save();
+            res.redirect(`/users/${user.username}`);
+        }
+    }
+    catch (error) {
+        console.warn(error);
+        res.send("server error");
+    }
+})
 
 module.exports = router;
