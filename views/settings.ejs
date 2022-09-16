@@ -9,3 +9,10 @@
     <input id="password" type="password" name="password" required>
     <button type="submit">Save</button>
 </form>
+
+<br>
+
+<form action="/users/?_method=DELETE" method="POST">
+    <input type="hidden" name="userId" value="<%= user.id %>">
+    <button type="submit">Delete your account</button>
+</form>

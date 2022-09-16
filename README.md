@@ -99,9 +99,9 @@ app.listen(PORT, () => {
 * [x] Create Routine and Exercise models w/ attributes
 * [x] Associate 1:M and M:M relationships for User and Routine models, and Routine and Exercise models respectively
 * [ ] Render users, routines, and exercises GET routes
-* [ ] Implement POST, PUT, and DELETE routes for users and routines
+* [x] Implement POST, PUT, and DELETE routes for users and routines
 * [x] "Add to routine" functionality for exercises from wger's Workout Manager REST API
-* [ ] Working user authentication and authorization
+* [x] Working user authentication and authorization
 * [x] Incorrect login management
 * [x] Password information is securely handled
 * [x] Encrypt necessary cookies

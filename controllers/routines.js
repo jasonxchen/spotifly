@@ -102,8 +102,8 @@ router.delete("/", async (req, res) => {
                     routineId: routine.id
                 }
             })
-            await routinesExercises.forEach(record => {
-                record.destroy();
+            routinesExercises.forEach(async (record) => {
+                await record.destroy();
             })
             await routine.destroy();
             res.redirect(`/users/${res.locals.user.username}`);

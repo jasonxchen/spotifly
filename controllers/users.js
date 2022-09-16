@@ -137,5 +137,31 @@ router.put("/", async (req, res) => {
         res.send("server error");
     }
 })
+// DELETE /users - delete user from db
+router.delete("/", async (req, res) => {
+    try {
+        if (!res.locals.user) {
+            // send error message if user is not logged-in and trying to send a request via other avenues
+            res.send("Error 405 (Method Not Allowed)!");
+        }
+        else {
+            const user = await db.user.findByPk(res.locals.user.id);
+            const routines = await db.routine.findAll({where: {userId: user.id}});
+            routines.forEach(async (routine) => {
+                const routinesExercises = await db.routines_exercises.findAll({where: {routineId: routine.id}});
+                routinesExercises.forEach(async (record) => {
+                    await record.destroy();
+                })
+                await routine.destroy();
+            })
+            await user.destroy();
+            res.redirect("/");
+        }
+    }
+    catch (error) {
+        console.warn(error);
+        res.send("server error");
+    }
+})
 
 module.exports = router;
