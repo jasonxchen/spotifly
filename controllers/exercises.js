@@ -24,6 +24,10 @@ router.post("/", async (req, res) => {
             // send error message if user is not logged-in and trying to send a request via other avenues
             res.send("Error 405 (Method Not Allowed)!");
         }
+        else if (!req.body.routineId) {
+            // To do: add message telling user to make a routine first (none on account)
+            res.redirect("/exercises");
+        }
         else {
             const routine = await db.routine.findByPk(req.body.routineId);
             const exerciseId = req.body.exerciseId;

@@ -4,25 +4,105 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
         <title>Spotifly</title>
     </head>
-    <body>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/exercises">Exercise DB</a></li>
-                <% if (user) { %>
-                    <li><a href="/routines/new">Create Routine</a></li>
-                    <li><a href="/users/profile">Profile</a></li>
-                    <li><a href="/settings">Settings</a></li>
-                    <li><a href="/users/logout">Logout</a></li>
-                <% } else { %>
-                    <li><a href="/users/new">Sign Up</a></li>
-                    <li><a href="/users/login">Login</a></li>
-                <% } %>
-            </ul>
+    <body class="bg-gray-100">
+        <!-- Tailwind Nav Bar template from https://tailwindui.com/components/application-ui/navigation/navbars -->
+        <nav class="bg-white drop-shadow">
+            <div class="mx-auto max-w-5xl px-2 sm:px-6 lg:px-8">
+                <div class="relative flex h-16 items-center justify-between">
+
+                    <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                        <!-- Mobile menu button -->
+                        <button type="button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false"
+                        onclick="closedBtn.classList.toggle('hidden'); openedBtn.classList.toggle('hidden'); mobileMenu.classList.toggle('hidden')">
+                            <span class="sr-only">Open main menu</span>
+                            
+                            <!-- Icon when menu is closed: outline/bars-3 (Heroicon)
+                            Menu open: "hidden", Menu closed: "block" -->
+                            <svg id="closedBtn" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                            </svg>
+
+                            <!-- Icon when menu is open: outline/x-mark (Heroicon)
+                            Menu open: "block", Menu closed: "hidden" -->
+                            <svg id="openedBtn" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                        <div class="flex flex-shrink-0 items-center">
+                            <!-- Image source: https://www.freepik.com/free-icon/male-silhouette-variant-showing-muscles_738466.htm -->
+                            <img class="block h-8 w-auto lg:hidden" src="https://cdn-icons-png.flaticon.com/512/30/30544.png?w=740&t=st=1663368767~exp=1663369367~hmac=0f807197ac988f558cbc7d2f448bf8ccf6991f698ff6514ffec21cc5e6eb0471" alt="Spotifly">
+                            <img class="hidden h-8 w-auto lg:block" src="https://cdn-icons-png.flaticon.com/512/30/30544.png?w=740&t=st=1663368767~exp=1663369367~hmac=0f807197ac988f558cbc7d2f448bf8ccf6991f698ff6514ffec21cc5e6eb0471" alt="Spotifly">
+                        </div>
+                        <!-- hidden div on mobile devices (save screen real estate) -->
+                        <div class="hidden sm:ml-6 sm:block">
+                            <div class="flex space-x-3">
+                                <a href="/" class="text-black hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                                <a href="/exercises" class="text-black hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Exercise DB</a>
+                                <% if(user) { %>
+                                    <a href="/routines/new" class="text-black hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Create Routine</a>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <% if (user) { %>
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                            <!-- Profile dropdown -->
+                            <div class="relative ml-3">
+                                <div>
+                                    <button type="button" class="flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true"
+                                    onclick="dropdownMenu.classList.toggle('hidden')">
+                                        <span class="sr-only">Open user menu</span>
+                                        <img class="h-8 w-8 rounded-full" src="https://cdn-icons-png.flaticon.com/512/1053/1053244.png?w=360" alt="Default user asset from freepik.com">
+                                    </button>
+                                </div>
+
+                                <!-- Dropdown menu, show/hide based on menu state. -->
+                                    <!-- Entering: "transition ease-out duration-100"
+                                            From: "transform opacity-0 scale-95"
+                                            To: "transform opacity-100 scale-100"
+                                        Leaving: "transition ease-in duration-75"
+                                            From: "transform opacity-100 scale-100"
+                                            To: "transform opacity-0 scale-95" -->
+                                <div id="dropdownMenu" class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                                    <!-- Active: "bg-gray-100", Not Active: "" -->
+                                    <a href="/users/profile" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+                                    <a href="/settings" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
+                                    <a href="/users/logout" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
+                                </div>
+                            </div>
+                        </div>
+                    <% } else { %>
+                        <div class="hidden sm:ml-6 sm:block">
+                            <div class="flex space-x-3">
+                                <a href="/users/login" class="text-black hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign In</a>
+                                <a href="/users/new" class="text-black hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign Up</a>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        
+            <!-- Mobile menu, show/hide based on menu state. -->
+            <div class="sm:hidden hidden" id="mobileMenu">
+                <div class="space-y-1 px-2 pt-2 pb-3">
+                    <a href="/" class="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                    <a href="/exercises" class="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Exercise DB</a>
+                    <a href="/routines/new" class="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Create Routine</a>
+                    <% if (!user) { %>
+                        <a href="/users/login" class="ttext-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Sign In</a>
+                        <a href="/users/new" class="ttext-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Sign Up</a>
+                    <% } %>
+                </div>
+            </div>
         </nav>
-        <h1>Hello user, welcome to Spotifly</h1>
+        
         <%- body %>
     </body>
 </html>
