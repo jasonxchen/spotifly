@@ -64,7 +64,29 @@ app.get("/settings", (req, res) => {
 })
 // display form to create new user
 app.get("/signup", (req, res) => {
-    res.render("users/new.ejs");
+    if (res.locals.user) {
+        res.redirect("/");
+    }
+    else {
+        res.render("users/new.ejs");
+    }
+})
+// show a login form to user
+app.get("/login", (req, res) => {
+    if (res.locals.user) {
+        res.redirect("/");
+    }
+    else {
+        res.render("users/login.ejs", {
+            // potenitally receive login error message
+            message: req.query.message ? req.query.message : null
+        });
+    }
+})
+// log out a user by clearing the stored cookie
+app.get("/logout", (req, res) => {
+    res.clearCookie("userId");
+    res.redirect("/");
 })
 
 // listen

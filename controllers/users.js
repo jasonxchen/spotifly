@@ -33,13 +33,6 @@ router.post("/", async (req, res) => {
         res.send("server error");
     }
 })
-// GET /users/login - show a login form to user
-router.get("/login", (req, res) => {
-    res.render("users/login.ejs", {
-        // potenitally receive login error message
-        message: req.query.message ? req.query.message : null
-    });
-})
 // POST /users/login - accept a payload of form data and use it to log a user in
 router.post("/login", async (req, res) => {
     try {
@@ -73,13 +66,7 @@ router.post("/login", async (req, res) => {
         res.send("server error");
     }
 })
-// GET /users/logout - log out a user by clearing the stored cookie
-router.get("/logout", (req, res) => {
-    res.clearCookie("userId");
-    res.redirect("/");
-})
 // GET /users/:username - public details about a user
-// To do: manage what happens for user with username "login", "new", etc.
 router.get("/:username", async (req, res) => {
     try {
         const publicUser = await db.user.findOne(
