@@ -15,10 +15,10 @@
 "/" route
 ![Home Wireframe](./img/Home-Wireframe.png)
 
-"/users/:userId/routines" route; where userId = signed in user
+"/users/:username" route
 ![My Routines Wireframe](./img/MyRoutines-Wireframe.png)
 
-"/users/:userId/routine/new" route
+"/routines/new" route
 ![New Routine Wireframe](./img/NewRoutine-Wireframe.png)
 
 "/exercises" route
@@ -27,7 +27,7 @@
 "/exercises/:exerciseId" route
 ![Exercises Details Wireframe](./img/Exercise-Details-Wireframe.png)
 
-"/users/new" route
+"/signup" route
 ![Sign Up Wireframe](./img/SignUp-Wireframe.png)
 
 ## ERD
@@ -38,21 +38,27 @@
 
 | HTTP METHOD | URL              | CRUD    | Response                              |
 | ----------- | ---------------- | ------- | ------------------------------------- |
-| GET         | `/users/:userId` | READ    | render user details page              |
-| GET         | `/users/new` | READ    | render form for user creation             |
-| GET         | `/users/:userId/routines` | READ   | render all routines from user |
-| GET    | `/users/:userId/routines/new` | READ | render form for routine creation |
+| GET | `/users/:username` | READ | render user details page with all their routines |
+| GET | `/signup` | READ | render form for user creation |
+| GET | `/login` | READ | render form for user login |
+| GET | `/settings` | READ | render form to edit user settings |
+| GET | `/logout` | N/A | log out user |
 | POST        | `/users`         | CREATE  | create new user in database           |
-| POST       | `/users/:userId/routines` | CREATE | create new routine in database |
+| POST | `/users/login` | N/A  | log a user in with provided payload of information |
 | PUT         | `/users/:userId` | UPDATE  | update user in database               |
-| PUT | `/users/:userId/routines/:routineId/exercises/:exercisesId` | UPDATE | update routine's exercise in database |
-| PUT | `/users/:userId/routines/:routineId` | UPDATE | update routine in database |
 | DELETE      | `/users/:userId` | DESTORY | delete user from database             |
-| DELETE | `/users/:userId/routines/:routineId` | DESTORY | delete routine from database |
 | GET         | `/` | READ    | render all routines     |
 | GET         | `/routines/:routineId` | READ    | render routine details page     |
+| GET | `/routines/new` | READ | render form for routine creation |
+| GET | `/routines/edit/:routineId` | READ | render form to edit routine |
+| POST | `/routines` | CREATE | create new routine in database |
+| PUT | `/routines/:routineId` | UPDATE | update routine in database |
+| DELETE | `/routines/:routineId` | DESTORY | delete routine from database |
+| DELETE | `/routines/:routineId/exercises/:exerciseId` | N/A | remove association of an exercise to routine |
 | GET         | `/exercises` | READ   | render exercises from search result |
-| GET         | `/exercises/:exerciseId` | READ    | render exercise details page  |
+| *GET         | `/exercises/:exerciseId` | READ    | render exercise details page  |
+| POST | `/exercises` | CREATE | create new exercise in db using API data |
+*=stretch goal
 
 ## API
 
@@ -89,11 +95,10 @@ app.listen(PORT, () => {
 * JavaScript
 * Node.js
 * PostgreSQL
-* CSS
-* HTML5
+* Tailwind CSS
+* HTML5 (EJS)
 * Sequelize
 * Express
-* EJS
 
 ## Minimum Viable Product (MVP) Goals
 * [x] Create Routine and Exercise models w/ attributes
@@ -105,7 +110,7 @@ app.listen(PORT, () => {
 * [x] Incorrect login management
 * [x] Password information is securely handled
 * [x] Encrypt necessary cookies
-* [ ] Minimal CSS styling
+* [x] Minimal CSS styling
 
 ## Stretch Goals
 * [ ] Search for exercises from API results

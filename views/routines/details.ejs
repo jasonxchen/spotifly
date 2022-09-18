@@ -9,8 +9,7 @@
         <% // only show Edit and Delete for owner %>
         <% if(user && user.id === routine.userId) { %>
             <a href="/routines/edit/<%= routine.id %>" class="hover:underline">Edit details</a>
-            <form action="/routines/?_method=DELETE" method="POST" style="display: inline-block">
-                <input type="hidden" name="routineId" value="<%= routine.id %>">
+            <form action="/routines/<%= routine.id %>/?_method=DELETE" method="POST" style="display: inline-block">
                 <button type="submit" class="mt-1 px-2 py-1 bg-red-500 rounded text-white text-sm">Delete</button>
             </form>
         <% } %>
@@ -25,8 +24,7 @@
                 <p>Equipment needed: <%= exercise.equipment %></p>
                 <% // only show remove button for owner %>
                 <% if(user && user.id === routine.userId) { %>
-                    <form action="/routines/<%= routine.id %>/exercises/?_method=DELETE" method="POST">
-                        <input type="hidden" name="exerciseId" value="<%= exercise.id %>">
+                    <form action="/routines/<%= routine.id %>/exercises/<%= exercise.id %>/?_method=DELETE" method="POST">
                         <button type="submit" class="mt-1 px-2 py-1 bg-red-500 rounded text-white text-sm">Remove</button>
                     </form>
                 <% }%>
