@@ -7,7 +7,7 @@
                 <a class="font-bold" href="/routines/<%= routine.id %>"><%= routine.title %></a>
             </h3>
             <h3 class="inline">
-                by <a href="/users/<%= routine.user.username %>"><%= routine.user.username %></a>
+                by <a href="/users/<%= routine.user.username %>" class="hover:underline"><%= routine.user.username %></a>
             </h3>
             <p class="block text-sm text-gray-500 text-clip"><%= routine.description %></p>
         </div>

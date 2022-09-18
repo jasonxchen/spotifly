@@ -26,6 +26,8 @@
                 <% } %>
             <% }) %>
 
+            <hr class="mt-2 mb-1">
+
             <% // anon visitors can see this page, but only users can send POST requests %>
             <% // To do: (reconsider) possible issue w/ excessive axios GET requests from anon visitors %>
             <% if (user) { %>
@@ -36,7 +38,7 @@
                     <input type="hidden" name="exerciseDesc" value="<%= description %>">
                     <input type="hidden" name="exerciseCategory" value="<%= exercise.category.name %>">
                     <input type="hidden" name="exerciseEquip" value="<%= equipmentList %>">
-                    <div class="mt-4">
+                    <div>
                         <label for="routine-id" class="text-sm">Choose a routine:</label>
                         <select id="routine-id" name="routineId" class="w-full p-1 text-sm text-gray-700 border border-solid border-gray-300 rounded shadow-sm focus:text-gray-700 focus:border-blue-600 focus:outline-none">
                             <% user.routines.forEach(routine => { %>
