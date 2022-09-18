@@ -1,31 +1,34 @@
-<h2><%= routine.title %></h2>
-<h3>brought to you by: 
-    <a href="/users/<%= routine.user.username %>">
-        <%= routine.user.username %>
-    </a>
-</h3>
-<p><%= routine.description %></p>
+<div class="flex flex-col justify-center mx-2 max-w-full">
+    <div class ="bg-white mt-3 border rounded-lg p-3 md:mx-auto md:w-6/12 max-w-full">
+        <h2 class="inline text-xl font-bold"><%= routine.title %></h2>
+        <h2 class="inline">
+            by <a href="/users/<%= routine.user.username %>"><%= routine.user.username %></a>
+        </h2>
+        <p class="block text-sm text-gray-500 text-clip"><%= routine.description %></p>
+        <!-- To do: continue styling past this point vvv -->
 
-<% // only show Edit and Delete for owner %>
-<% if(user && user.id === routine.userId) { %>
-    <a href="/routines/edit/<%= routine.id %>">Edit details</a>
-    <form action="/routines/?_method=DELETE" method="POST" style="display: inline-block">
-        <input type="hidden" name="routineId" value="<%= routine.id %>">
-        <button type="submit">Delete</button>
-    </form>
-<% } %>
+        <% // only show Edit and Delete for owner %>
+        <% if(user && user.id === routine.userId) { %>
+            <a href="/routines/edit/<%= routine.id %>">Edit details</a>
+            <form action="/routines/?_method=DELETE" method="POST" style="display: inline-block">
+                <input type="hidden" name="routineId" value="<%= routine.id %>">
+                <button type="submit">Delete</button>
+            </form>
+        <% } %>
 
-<% routine.exercises.forEach(exercise => { %>
-    <h4><%= exercise.name %></h4>
-    <p>Description: <%= exercise.description %></p>
-    <p>Muscle group: <%= exercise.category %></p>
-    <p>Equipment needed: <%= exercise.equipment %></p>
-    <% // only show remove button for owner %>
-    <% if(user && user.id === routine.userId) { %>
-        <form action="/routines/<%= routine.id %>/exercises/?_method=DELETE" method="POST">
-            <input type="hidden" name="exerciseId" value="<%= exercise.id %>">
-            <button type="submit">Remove</button>
-        </form>
-    <% }%>
-    <br>
-<% }) %>
+        <% routine.exercises.forEach(exercise => { %>
+            <h4><%= exercise.name %></h4>
+            <p>Description: <%= exercise.description %></p>
+            <p>Muscle group: <%= exercise.category %></p>
+            <p>Equipment needed: <%= exercise.equipment %></p>
+            <% // only show remove button for owner %>
+            <% if(user && user.id === routine.userId) { %>
+                <form action="/routines/<%= routine.id %>/exercises/?_method=DELETE" method="POST">
+                    <input type="hidden" name="exerciseId" value="<%= exercise.id %>">
+                    <button type="submit">Remove</button>
+                </form>
+            <% }%>
+            <br>
+        <% }) %>
+    </div>
+</div>
