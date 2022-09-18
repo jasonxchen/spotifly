@@ -2,12 +2,12 @@
     <div class ="bg-white mt-3 border rounded-lg px-4 py-1 md:mx-auto md:w-3/12 max-w-full">
         <form action="/routines" method="POST">
             <div class="mt-3 flex flex-col">
-                <label for="title" class="">Title:</label>
-                <input id="title" type="text" name="title" class="mt-1 border text-clip" size="fill" required>
+                <label for="title">Title:</label>
+                <input id="title" type="text" name="title" class="mt-1 border rounded text-clip px-2 py-1" required>
             </div>
             <div class="mt-3 flex flex-col">
-                <label for="description" class="">Description:</label>
-                <textarea id="description" type="text" name="description" rows="3" class="mt-1 border"></textarea>
+                <label for="description">Description:</label>
+                <textarea id="description" type="text" name="description" rows="3" class="mt-1 border rounded px-2 py-1"></textarea>
             </div>
             <button type="submit" class="my-4 px-2 py-1 bg-blue-500 rounded text-white text-sm w-full">Create</button>
         </form>
