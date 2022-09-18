@@ -1,50 +1,52 @@
-<h2>List of exercises from wger Workout Manager:</h2>
+<div class="flex flex-col justify-center mx-2 max-w-full">
+    <h2 class="text-2xl mt-2 md:mx-auto md:w-6/12 max-w-full px-2">List of exercises from wger Workout Manager:</h2>
 
-<% exercises.forEach(exercise => { %>
-    <h3><%= exercise.name %></h3>
-    <% let description = exercise.description %>
-    <% // remove HTML elements from description key in API response.data.results (aka "exercises" variable) %>
-    <% description = description.replaceAll("<p>", "").replaceAll("</p>", ""); %>
-    <% description = description.replaceAll("<em>", "").replaceAll("</em>", ""); %>
-    <% description = description.replaceAll("<li>", "").replaceAll("</li>", ""); %>
-    <% description = description.replaceAll("<ul>", "").replaceAll("</ul>", ""); %>
-    <% description = description.replaceAll("<ol>", "").replaceAll("</ol>", ""); %>
-    <% description = description.replaceAll("<strong>", "").replaceAll("</strong>", ""); %>
-    <p><%= description %></p>
-    <p>Muscle group: <%= exercise.category.name %></p>
-    <p>Equipment: </p>
-    <% let equipmentList = ""; %>
-    <ul>
-        <% exercise.equipment.forEach((equipment, index) => { %>
-            <li><%= equipment.name %></li>
-            <% if (index === 0) { %>
-                <% equipmentList += equipment.name; %>
-            <% } else { %>
-                <% equipmentList += `, ${equipment.name}`; %>
+    <% exercises.forEach(exercise => { %>
+        <div class ="bg-white mt-1 border rounded-lg p-3 md:mx-auto md:w-6/12 max-w-full">
+            <h3 class="inline text-xl font-bold"><%= exercise.name %></h3>
+            <% let description = exercise.description %>
+            <% // remove HTML elements from description key in API response.data.results (aka "exercises" variable) %>
+            <% description = description.replaceAll("<p>", "").replaceAll("</p>", ""); %>
+            <% description = description.replaceAll("<em>", "").replaceAll("</em>", ""); %>
+            <% description = description.replaceAll("<li>", "").replaceAll("</li>", ""); %>
+            <% description = description.replaceAll("<ul>", "").replaceAll("</ul>", ""); %>
+            <% description = description.replaceAll("<ol>", "").replaceAll("</ol>", ""); %>
+            <% description = description.replaceAll("<strong>", "").replaceAll("</strong>", ""); %>
+            <p class="block text-sm text-gray-500 text-clip"><%= description %></p>
+            <p>Muscle group: <%= exercise.category.name %></p>
+            <p class="inline">Equipment: </p>
+            <% let equipmentList = ""; %>
+            <% exercise.equipment.forEach((equipment, index) => { %>
+                <% if (index === 0) { %>
+                    <p class="inline"><%= equipment.name %></p>
+                    <% equipmentList += equipment.name; %>
+                    <% } else { %>
+                    <p class="inline">+ <%= equipment.name %></p>
+                    <% equipmentList += `, ${equipment.name}`; %>
+                <% } %>
+            <% }) %>
+
+            <% // anon visitors can see this page, but only users can send POST requests %>
+            <% // To do: (reconsider) possible issue w/ excessive axios GET requests from anon visitors %>
+            <% if (user) { %>
+                <form action="/exercises" method="POST">
+                    <% //values needed to create a new exercise record %>
+                    <input type="hidden" name="exerciseId" value="<%= exercise.id %>">
+                    <input type="hidden" name="exerciseName" value="<%= exercise.name %>">
+                    <input type="hidden" name="exerciseDesc" value="<%= description %>">
+                    <input type="hidden" name="exerciseCategory" value="<%= exercise.category.name %>">
+                    <input type="hidden" name="exerciseEquip" value="<%= equipmentList %>">
+                    <div class="mt-4">
+                        <label for="routine-id" class="text-sm">Choose a routine:</label>
+                        <select id="routine-id" name="routineId" class="w-full p-1 text-sm text-gray-700 border border-solid border-gray-300 rounded shadow-sm focus:text-gray-700 focus:border-blue-600 focus:outline-none">
+                            <% user.routines.forEach(routine => { %>
+                                <option value="<%= routine.id %>"><%= routine.title %></option>
+                            <% }) %>
+                        </select>
+                        <button type="submit" class="mt-1 px-2 py-1 bg-blue-500 rounded text-white text-sm">Add</button>
+                    </div>
+                </form>
             <% } %>
-        <% }) %>
-    </ul>
-
-    <% // anon visitors can see this page, but only users can send POST requests %>
-    <% // To do: (reconsider) possible issue w/ excessive axios GET requests from anon visitors %>
-    <% if (user) { %>
-        <form action="/exercises" method="POST">
-            <% //values needed to create a new exercise record %>
-            <input type="hidden" name="exerciseId" value="<%= exercise.id %>">
-            <input type="hidden" name="exerciseName" value="<%= exercise.name %>">
-            <input type="hidden" name="exerciseDesc" value="<%= description %>">
-            <input type="hidden" name="exerciseCategory" value="<%= exercise.category.name %>">
-            <input type="hidden" name="exerciseEquip" value="<%= equipmentList %>">
-            
-            <label for="routine-id">Choose a routine:</label>
-            <select id="routine-id" name="routineId">
-                <% user.routines.forEach(routine => { %>
-                    <option value="<%= routine.id %>"><%= routine.title %></option>
-                <% }) %>
-            </select>
-            <button type="submit">Add</button>
-        </form>
-    <% } %>
-
-    <br>
-<% }) %>
+        </div>
+    <% }) %>
+</div>

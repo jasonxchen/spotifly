@@ -1,12 +1,12 @@
 <div class="flex flex-col justify-center mx-2 max-w-full">
-    <h2 class="text-2xl mt-2 mx-auto w-6/12 max-w-full px-2">Explore:</h2>
+    <h2 class="text-2xl mt-2 md:mx-auto md:w-6/12 max-w-full px-2">Explore:</h2>
 
     <% routines.forEach(routine => { %>
-        <div class ="bg-white mt-1 border rounded-lg p-3 mx-auto w-6/12 max-w-full">
+        <div class ="bg-white mt-1 border rounded-lg p-3 md:mx-auto md:w-6/12 max-w-full">
             <h3 class="inline text-xl">
                 <a class="font-bold" href="/routines/<%= routine.id %>"><%= routine.title %></a>
             </h3>
-            <h3 class="inline h-min">
+            <h3 class="inline">
                 by <a href="/users/<%= routine.user.username %>"><%= routine.user.username %></a>
             </h3>
             <p class="block text-sm text-gray-500 text-clip"><%= routine.description %></p>
