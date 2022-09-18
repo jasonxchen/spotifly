@@ -2,33 +2,35 @@
     <div class ="bg-white mt-3 border rounded-lg p-3 md:mx-auto md:w-6/12 max-w-full">
         <h2 class="inline text-xl font-bold"><%= routine.title %></h2>
         <h2 class="inline">
-            by <a href="/users/<%= routine.user.username %>"><%= routine.user.username %></a>
+            by <a href="/users/<%= routine.user.username %>" class="hover:underline"><%= routine.user.username %></a>
         </h2>
         <p class="block text-sm text-gray-500 text-clip"><%= routine.description %></p>
-        <!-- To do: continue styling past this point vvv -->
 
         <% // only show Edit and Delete for owner %>
         <% if(user && user.id === routine.userId) { %>
-            <a href="/routines/edit/<%= routine.id %>">Edit details</a>
+            <a href="/routines/edit/<%= routine.id %>" class="hover:underline">Edit details</a>
             <form action="/routines/?_method=DELETE" method="POST" style="display: inline-block">
                 <input type="hidden" name="routineId" value="<%= routine.id %>">
-                <button type="submit">Delete</button>
+                <button type="submit" class="mt-1 px-2 py-1 bg-red-500 rounded text-white text-sm">Delete</button>
             </form>
         <% } %>
 
+        <hr class="mt-4">
+
         <% routine.exercises.forEach(exercise => { %>
-            <h4><%= exercise.name %></h4>
-            <p>Description: <%= exercise.description %></p>
-            <p>Muscle group: <%= exercise.category %></p>
-            <p>Equipment needed: <%= exercise.equipment %></p>
-            <% // only show remove button for owner %>
-            <% if(user && user.id === routine.userId) { %>
-                <form action="/routines/<%= routine.id %>/exercises/?_method=DELETE" method="POST">
-                    <input type="hidden" name="exerciseId" value="<%= exercise.id %>">
-                    <button type="submit">Remove</button>
-                </form>
-            <% }%>
-            <br>
+            <div class="mt-4">
+                <h4 class="inline font-bold"><%= exercise.name %></h4>
+                <p class="block text-sm text-gray-500 text-clip"><%= exercise.description %></p>
+                <p>Muscle group: <%= exercise.category %></p>
+                <p>Equipment needed: <%= exercise.equipment %></p>
+                <% // only show remove button for owner %>
+                <% if(user && user.id === routine.userId) { %>
+                    <form action="/routines/<%= routine.id %>/exercises/?_method=DELETE" method="POST">
+                        <input type="hidden" name="exerciseId" value="<%= exercise.id %>">
+                        <button type="submit" class="mt-1 px-2 py-1 bg-red-500 rounded text-white text-sm">Remove</button>
+                    </form>
+                <% }%>
+            </div>
         <% }) %>
     </div>
 </div>
