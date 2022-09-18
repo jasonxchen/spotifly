@@ -4,10 +4,6 @@ const crypto = require("crypto-js");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 
-// GET /users/new - form to create new user
-router.get("/new", (req, res) => {
-    res.render("users/new.ejs");
-})
 // POST /users - create user in db
 router.post("/", async (req, res) => {
     try {

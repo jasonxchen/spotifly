@@ -38,6 +38,7 @@ app.use("/routines", require("./controllers/routines"));
 app.use("/exercises", require("./controllers/exercises"));
 
 // routes
+// home page
 app.get("/", async (req, res) => {
     try {
         // To do: render older routines later (i.e. facebook feed scrolling) and/or hard limit
@@ -52,13 +53,18 @@ app.get("/", async (req, res) => {
         res.send("server error");
     }
 })
+// display form to edit user settings
 app.get("/settings", (req, res) => {
     if (!res.locals.user) {
         res.redirect("/users/login");
     }
     else {
-        res.render("settings.ejs");
+        res.render("users/settings.ejs");
     }
+})
+// display form to create new user
+app.get("/signup", (req, res) => {
+    res.render("users/new.ejs");
 })
 
 // listen
