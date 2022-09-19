@@ -3,18 +3,34 @@ const db = require("../models");
 const axios = require("axios");
 const router = express.Router();
 
-// GET /exercises?page=# - list of exercises from wger Workout Manager
+// GET /exercises?page=[...]&q=[...] - list of exercises from wger Workout Manager
 router.get("/", async (req, res) => {
     try {
         let page = parseInt(req.query.page);
-        if (req.query < 1) {
+        // handle user incorrect input of page number in url
+        if (page < 1) {
             page = 1;
         }
-        // offset=0 on first page and increases by 50 as page num increases
-        const response = await axios.get(`https://wger.de/api/v2/exerciseinfo/?limit=50&offset=${(page - 1) * 50}`);
-        // filter results to only contain english entries (built-in API url filter broken as of 2022-09-19)
-        const exercises = response.data.results.filter(item => item.language.id === 2);
-        res.render("exercises/index.ejs", {exercises, page});
+        // if there is a search query
+        if (req.query.q) {
+            // no results limit or 'pages'
+            const response = await axios.get(`https://wger.de/api/v2/exerciseinfo/?limit=1000`);
+            const results = response.data.results;
+            // String.prototype.match() doesn't work in IE
+            // To do: RegExp.prototype.test() does, but doesn't return results that are prefixed or suffixed
+            const search = new RegExp(req.query.q, "gi"),
+            filtered = results.filter(result => result.name.match(search));
+            // filter results to only contain english entries (built-in API url filter broken as of 2022-09-19)
+            const exercises = filtered.filter(item => item.language.id === 2);
+            res.render("exercises/index.ejs", {exercises, page});
+        }
+        else {
+            // offset=0 on first page and increases by 50 as page num increases
+            const response = await axios.get(`https://wger.de/api/v2/exerciseinfo/?limit=50&offset=${(page - 1) * 50}`);
+            // filter results to only contain english entries (built-in API url filter broken as of 2022-09-19)
+            const exercises = response.data.results.filter(item => item.language.id === 2);
+            res.render("exercises/index.ejs", {exercises, page});
+        }
     } 
     catch (error) {
         console.warn(error);

@@ -113,7 +113,7 @@ app.listen(PORT, () => {
 * [x] Minimal CSS styling
 
 ## Stretch Goals
-* [ ] Search for exercises from API results
+* [x] Search for exercises from API results
 * [ ] More CSS styling
 * [ ] Dark mode
 * [ ] Incorporate Spotify API to add a music playlist to routines (1:M)
@@ -127,5 +127,5 @@ app.listen(PORT, () => {
 * [ ] Use modals instead of /new and /edit pages
 * [ ] Have template error page for error catches instead of res.send()
 * [ ] Hash/encrypt IDs in URL
-* [ ] Allow pagination of exercises on exercises/index.ejs view to cut down on API request time
+* [x] Allow pagination of exercises on exercises/index.ejs view to cut down on API request time
 * [ ] Replace "Error 405" res.send() messages with something more standard (see google.com)
