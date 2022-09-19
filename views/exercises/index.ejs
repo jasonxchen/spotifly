@@ -51,4 +51,12 @@
             <% } %>
         </div>
     <% }) %>
+    <div class ="flex justify-end gap-x-2 mt-1 mb-4 p-1 md:mx-auto md:w-6/12 max-w-full">
+        <% if (page <= 1) { %>
+            <a href="/exercises?page=<%= page + 1 %>" class="mt-1 px-2 py-1 bg-blue-500 rounded text-white text-sm">Next</a>
+            <% } else { %>
+                <a href="/exercises?page=<%= page - 1 %>" class="mt-1 px-2 py-1 bg-blue-500 rounded text-white text-sm">Previous</a>
+                <a href="/exercises?page=<%= page + 1 %>" class="mt-1 px-2 py-1 bg-blue-500 rounded text-white text-sm">Next</a>
+        <% } %>
+    </div>
 </div>

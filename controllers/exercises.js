@@ -3,14 +3,18 @@ const db = require("../models");
 const axios = require("axios");
 const router = express.Router();
 
-// GET /exercises - list of exercises from wger Workout Manager
+// GET /exercises?page=# - list of exercises from wger Workout Manager
 router.get("/", async (req, res) => {
     try {
-        // response data only has <= 60 results for testing speed...
-        // To do: for mvp, increase limit; for stretch goal, add pagination
-        const response = await axios.get("https://wger.de/api/v2/exerciseinfo/?limit=60");
+        let page = parseInt(req.query.page);
+        if (req.query < 1) {
+            page = 1;
+        }
+        // offset=0 on first page and increases by 50 as page num increases
+        const response = await axios.get(`https://wger.de/api/v2/exerciseinfo/?limit=50&offset=${(page - 1) * 50}`);
+        // filter results to only contain english entries (built-in API url filter broken as of 2022-09-19)
         const exercises = response.data.results.filter(item => item.language.id === 2);
-        res.render("exercises/index.ejs", {exercises});
+        res.render("exercises/index.ejs", {exercises, page});
     } 
     catch (error) {
         console.warn(error);
