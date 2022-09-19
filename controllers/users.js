@@ -39,11 +39,10 @@ router.post("/", async (req, res) => {
 // POST /users/login - accept a payload of form data and use it to log a user in
 router.post("/login", async (req, res) => {
     try {
-        // look up user in the db using the supplied email
+        // look up user in the db using the supplied username or email
         const user = await db.user.findOne({
             where: {
-                // To do: log in with either username or email
-                email: req.body.email
+                [Op.or]: [{username: req.body.userOrEmail}, {email: req.body.userOrEmail}]
             }
         })
         const incorrectLogin = "Incorrect username or password";    // default error message
