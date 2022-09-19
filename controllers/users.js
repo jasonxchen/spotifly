@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("../models");
 const crypto = require("crypto-js");
 const bcrypt = require("bcrypt");
+const { Op } = require("sequelize");
 const router = express.Router();
 
 // POST /users - create user in db
@@ -10,16 +11,18 @@ router.post("/", async (req, res) => {
         const hashedPassword = bcrypt.hashSync(req.body.password, 12);
         const [newUser, userCreated] = await db.user.findOrCreate({
             where: {
-                username: req.body.username
+                // don't create account if either username or email are already in use
+                [Op.or]: [{username: req.body.username}, {email: req.body.email}]
             },
             defaults: {
-                email: req.body.email,    // To do: handle duplicate emails
+                username: req.body.username,
+                email: req.body.email,
                 password: hashedPassword
             }
         });
         if (!userCreated) {
             console.log("user exists already");
-            res.redirect("/users/login?message=Please log into your account to continue.");
+            res.redirect("/login?message=Please log into your account to continue.");
         }
         else {
             // on successful login
@@ -47,12 +50,12 @@ router.post("/login", async (req, res) => {
         // if the user is not found, send user back to login form
         if (!user) {
             console.log("user not found");
-            res.redirect("/users/login?message=" + incorrectLogin);
+            res.redirect("/login?message=" + incorrectLogin);
         }
         // if the user is found, but wrong pw, send back to form
         else if (!bcrypt.compareSync(req.body.password, user.password)) {
             console.log("wrong password");
-            res.redirect("/users/login?message=" + incorrectLogin);
+            res.redirect("/login?message=" + incorrectLogin);
         }
         // if the user is found and pw matches what is in the db, log them in
         else {
