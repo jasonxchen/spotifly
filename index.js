@@ -90,6 +90,10 @@ app.get("/logout", (req, res) => {
     res.clearCookie("userId");
     res.redirect("/");
 })
+// display about page
+app.get("/about", (req, res) => {
+    res.render("about.ejs");
+})
 
 // listen
 app.listen(PORT, () => {
