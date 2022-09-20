@@ -98,14 +98,27 @@ router.put("/:userId", async (req, res) => {
         else {
             const hashedPassword = bcrypt.hashSync(req.body.password, 12);
             const user = await db.user.findByPk(req.params.userId);
-            user.set({
-                // To do: handle duplicate usernames/email, make pw change more secure, and separate changes (not all at once)
-                username: req.body.username,
-                email: req.body.email,
-                password: hashedPassword
+            // find if username or email is taken in user db
+            const existingUser = await db.user.findOne({
+                where: {
+                    [Op.or]: [{username: req.body.username}, {email: req.body.email}]
+                }
             })
-            await user.save();
-            res.redirect(`/users/${user.username}`);
+            // if the user exists and it's not the logged-in user, redirect to settings page with message
+            if (existingUser && existingUser.id !== res.locals.user.id) {
+                // To do: add message
+                res.redirect("/settings?message=Username or email unavailable");
+            }
+            else {
+                user.set({
+                    // To do: make pw change more secure, and separate changes (not all at once)
+                    username: req.body.username,
+                    email: req.body.email,
+                    password: hashedPassword
+                })
+                await user.save();
+                res.redirect(`/users/${user.username}`);
+            }
         }
     }
     catch (error) {

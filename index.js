@@ -59,7 +59,9 @@ app.get("/settings", (req, res) => {
         res.redirect("/users/login");
     }
     else {
-        res.render("users/settings.ejs");
+        res.render("users/settings.ejs", {
+            message: req.query.message ? req.query.message : null
+        });
     }
 })
 // display form to create new user
