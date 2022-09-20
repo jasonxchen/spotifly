@@ -96,7 +96,6 @@ router.put("/:userId", async (req, res) => {
             res.send("Error 405 (Method Not Allowed)!");
         }
         else {
-            const hashedPassword = bcrypt.hashSync(req.body.password, 12);
             const user = await db.user.findByPk(req.params.userId);
             // find if username or email is taken in user db
             const existingUsername = await db.user.findOne({
@@ -116,9 +115,16 @@ router.put("/:userId", async (req, res) => {
             else if (existingEmail && existingEmail.email !== res.locals.user.email) {
                 res.redirect("/settings?message=Email already in use");
             }
+            else if (!bcrypt.compareSync(req.body.oldPassword, user.password)) {
+                res.redirect("/settings?message=Old password is incorrect");
+            }
+            else if (req.body.newPassword !== req.body.newPasswordConfirm) {
+                res.redirect("/settings?message=Password confirmation does not match");
+            }
             else {
+                const hashedPassword = bcrypt.hashSync(req.body.newPassword, 12);
                 user.set({
-                    // To do: make pw change more secure, and separate changes (not all at once)
+                    // To do: separate changes (not all at once)
                     username: req.body.username,
                     email: req.body.email,
                     password: hashedPassword
