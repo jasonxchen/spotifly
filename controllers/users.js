@@ -99,14 +99,22 @@ router.put("/:userId", async (req, res) => {
             const hashedPassword = bcrypt.hashSync(req.body.password, 12);
             const user = await db.user.findByPk(req.params.userId);
             // find if username or email is taken in user db
-            const existingUser = await db.user.findOne({
+            const existingUsername = await db.user.findOne({
                 where: {
-                    [Op.or]: [{username: req.body.username}, {email: req.body.email}]
+                    username: req.body.username
                 }
             })
-            // if the user exists and it's not the logged-in user, redirect to settings page with message
-            if (existingUser && existingUser.id !== res.locals.user.id) {
-                res.redirect("/settings?message=Username or email unavailable");
+            const existingEmail = await db.user.findOne({
+                where: {
+                    email: req.body.email
+                }
+            })
+            // if the username or email exists and they're not used by the logged-in user, redirect to settings page with message
+            if (existingUsername && existingUsername.username !== res.locals.user.username) {
+                res.redirect("/settings?message=Username unavailable");
+            }
+            else if (existingEmail && existingEmail.email !== res.locals.user.email) {
+                res.redirect("/settings?message=Email already in use");
             }
             else {
                 user.set({
