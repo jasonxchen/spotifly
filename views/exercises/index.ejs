@@ -40,7 +40,6 @@
             <hr class="mt-2 mb-1">
 
             <% // anon visitors can see this page, but only users can send POST requests %>
-            <% // To do: (reconsider) possible issue w/ excessive axios GET requests from anon visitors %>
             <% if (user) { %>
                 <form action="/exercises" method="POST">
                     <% //values needed to create a new exercise record %>
