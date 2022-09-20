@@ -7,7 +7,7 @@
         <form action="/users/<%= user.id %>/?_method=PUT" method="POST">
             <div class="mt-3 flex flex-col">
                 <label for="username">Username:</label>
-                <input id="username" type="text" name="username" value="<%= user.username %>" class="mt-1 border rounded text-clip px-2 py-1" required>
+                <input id="username" type="text" name="username" value="<%= user.username %>" class="mt-1 border rounded text-clip px-2 py-1" maxlength="32" onkeydown="return /[a-zA-Z0-9]/i.test(event.key)" required>
             </div>
             <div class="mt-3 flex flex-col">
                 <label for="email">Email:</label>
