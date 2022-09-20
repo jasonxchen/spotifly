@@ -10,7 +10,9 @@ router.get("/new", async (req, res) => {
             res.redirect("/");
         }
         else {
-            res.render("routines/new.ejs");
+            res.render("routines/new.ejs", {
+                message: req.query.message ? req.query.message : null
+            });
         }
     }
     catch (error) {

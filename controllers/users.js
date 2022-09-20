@@ -106,7 +106,6 @@ router.put("/:userId", async (req, res) => {
             })
             // if the user exists and it's not the logged-in user, redirect to settings page with message
             if (existingUser && existingUser.id !== res.locals.user.id) {
-                // To do: add message
                 res.redirect("/settings?message=Username or email unavailable");
             }
             else {

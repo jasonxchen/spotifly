@@ -45,8 +45,7 @@ router.post("/", async (req, res) => {
             res.send("Error 405 (Method Not Allowed)!");
         }
         else if (!req.body.routineId) {
-            // To do: add message telling user to make a routine first (none on account)
-            res.redirect("/exercises");
+            res.redirect("/routines/new?message=No routines found on account. Create one before adding an exercise.");
         }
         else {
             const routine = await db.routine.findByPk(req.body.routineId);
