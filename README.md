@@ -114,18 +114,17 @@ app.listen(PORT, () => {
 
 ## Stretch Goals
 * [x] Search for exercises from API results
-* [ ] More CSS styling
-* [ ] Dark mode
+* [x] Allow pagination of exercises on exercises/index.ejs view to cut down on API request time
+* [ ] Add About page and other links
+* [ ] Add option to write notes on each exercise in routine
+* [ ] Save other users' routines to your own (make a copy)
+* [ ] Implement more search categories (e.g. by routine titles)
+* [ ] Use modals instead of /new and /edit pages
 * [ ] Incorporate Spotify API to add a music playlist to routines (1:M)
 * [ ] Add a M:M relationship for Routine and a new Tag model for better organization
-* [ ] Implement more search categories (e.g. by routine titles)
-* [ ] Add About page and other links
-* [ ] Save other users' routines to your own (view only vs. copy?)
-* [ ] Add option to write notes on each exercise in routine
+* [ ] Have template error page for error catches instead of res.send()
+* [ ] Replace "Error 405" res.send() messages with something more standard (see google.com)
+* [ ] Dark mode
+* [ ] Hash/encrypt IDs in URL
 * [ ] A nice logo referencing wings for the latissimus dorsi muscle
 * [ ] Update README.md Wireframes, ERD, and Routes as projects evolves
-* [ ] Use modals instead of /new and /edit pages
-* [ ] Have template error page for error catches instead of res.send()
-* [ ] Hash/encrypt IDs in URL
-* [x] Allow pagination of exercises on exercises/index.ejs view to cut down on API request time
-* [ ] Replace "Error 405" res.send() messages with something more standard (see google.com)
