@@ -137,18 +137,25 @@ Thanks to Node.js this web application runs off an Express.js server with a Post
 * [x] Allow pagination of exercises on exercises/index.ejs view to cut down on API request time
 * [x] Add About page and other links
 * [x] Add option to edit notes on each exercise in routine
+* [ ] Change color on hover for every button
+* [ ] Add option to reorder exercises in routines
 * [ ] Save other users' routines to your own (make a copy)
 * [ ] Implement more search categories (e.g. by routine titles)
 * [ ] Use modals instead of /new and /edit pages
+* [ ] Add confirmation for deletes and removes
+* [ ] Display "added" message and stay on Exercise DB page upon adding to routine instead of redirecting
 * [ ] Incorporate Spotify API to add a music playlist to routines (1:M)
 * [ ] Add a M:M relationship for Routine and a new Tag model for better organization
+* [ ] Have load page for querying wger API
 * [ ] Have template error page for error catches instead of res.send()
 * [ ] Replace "Error 405" res.send() messages with something more standard (see google.com)
 * [ ] Dark mode
 * [ ] Dynamic search
+* [ ] Hide message query strings passed into URLs
 * [ ] Hash/encrypt IDs in URL
 * [ ] A nice logo referencing wings for the latissimus dorsi muscle
 * [ ] Update README.md Wireframes, ERD, and Routes as projects evolves
+* [ ] Resolve "To do:" messages in code
 
 ## Approach Taken
 
