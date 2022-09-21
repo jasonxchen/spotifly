@@ -26,8 +26,11 @@
             <% }) %>
             <div class="mt-4">
                 <h4 class="inline font-bold"><%= exercise.name %></h4>
-                <% // allow changing note for owner of routine %>
+                <% // only show remove button and allow changing note for owner of routine %>
                 <% if (user && user.id === routine.userId) { %>
+                    <form action="/routines/<%= routine.id %>/exercises/<%= exercise.id %>/?_method=DELETE" method="POST" class="inline">
+                        <button type="submit" class="mx-1 px-1.5 py-1 bg-red-500 rounded text-white text-xs">Remove</button>
+                    </form>
                     <form action="/notes/<%= associatedNote.id %>/?_method=PUT" method="POST">
                         <div class="flex flex-col">
                             <label for="note-input">Note:</label>
@@ -40,12 +43,6 @@
                 <% } %>
                 <p>Muscle group: <%= exercise.category %></p>
                 <p>Equipment needed: <%= exercise.equipment %></p>
-                <% // only show remove button for owner %>
-                <% if(user && user.id === routine.userId) { %>
-                    <form action="/routines/<%= routine.id %>/exercises/<%= exercise.id %>/?_method=DELETE" method="POST">
-                        <button type="submit" class="mt-1 px-2 py-1 bg-red-500 rounded text-white text-sm">Remove</button>
-                    </form>
-                <% }%>
             </div>
         <% }) %>
     </div>
