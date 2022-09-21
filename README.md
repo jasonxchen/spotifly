@@ -2,6 +2,8 @@
 
 "Can you spot me?" Get used to asking that when you head to the gym with your new workout routines. Use Spotifly to create your own exercise "playlists" and share them with others.
 
+[→ Access the web app here! ←](https://spotifly-jasonxchen.koyeb.app/)
+
 ## User Stories
 
 * As a user, I want to create workout routines to share with others and to keep as reminders for myself.
@@ -92,6 +94,7 @@ app.listen(PORT, () => {
 ![API Results Head](./img/API_results_head.png)
 
 ## Tech Stack
+
 * JavaScript
 * Node.js
 * PostgreSQL
@@ -100,7 +103,22 @@ app.listen(PORT, () => {
 * Sequelize
 * Express
 
+## Technology Usage
+
+Thanks to Node.js this web application runs off an Express.js server with a PostgreSQL database system. The HTTP requests Express recieves goes through logic written in JavaScript and interacts with the database via Sequelize. Depending on the request, certain views are shown to the user with the help of  EJS rendering coupled with styling from Tailwind CSS element classes.
+
+## Development Environment Installation Instructions
+
+* Fork and clone this repository
+* Run `npm install` to install dependencies
+* Run `sequelize db:create` to create the development database
+* Run `sequelize db:migrate` to migrate the models into the database
+* Ensure nodemon is installed globally
+    * If not, run `npm install -g nodemon` (or `npm install --save-dev nodemon` for local installation)
+* Run `nodemon` to start the application (or `npx nodemon` for local installations)
+
 ## Minimum Viable Product (MVP) Goals
+
 * [x] Create Routine and Exercise models w/ attributes
 * [x] Associate 1:M and M:M relationships for User and Routine models, and Routine and Exercise models respectively
 * [x] Render users, routines, and exercises GET routes
@@ -113,9 +131,10 @@ app.listen(PORT, () => {
 * [x] Minimal CSS styling
 
 ## Stretch Goals
+
 * [x] Search for exercises from API results
 * [x] Allow pagination of exercises on exercises/index.ejs view to cut down on API request time
-* [ ] Add About page and other links
+* [x] Add About page and other links
 * [ ] Add option to write notes on each exercise in routine
 * [ ] Save other users' routines to your own (make a copy)
 * [ ] Implement more search categories (e.g. by routine titles)
@@ -125,6 +144,19 @@ app.listen(PORT, () => {
 * [ ] Have template error page for error catches instead of res.send()
 * [ ] Replace "Error 405" res.send() messages with something more standard (see google.com)
 * [ ] Dark mode
+* [ ] Dynamic search
 * [ ] Hash/encrypt IDs in URL
 * [ ] A nice logo referencing wings for the latissimus dorsi muscle
 * [ ] Update README.md Wireframes, ERD, and Routes as projects evolves
+
+## Approach Taken
+
+Once I had my database relationships drawn out on my ERD, I realized I needed to *start on my most nested data first*. Before I could do anything with users or routines, I needed the exercise data to interact with. I started out by mapping over what I could pull from wger's API into my local database. Once that was accomplished, I manually created some routines and implemented ways to relate certain exercise records to routine records. After that, I manually created some users and added ways to tie routines with exercises to the users based on the relationships defined on the ERD. Once I was able to get that working as well, the next step was to allow a new visitor to the site to first create a user account, then add routines to the account, and finally add exercises to the routines. For a full user experience, I also added full CRUD to the users and routines models. During these implementations, proper maintenance of the database had to be considered at all times, especially making sure deletion of records cascaded properly.
+
+## Post-Project Sprint Reflections
+
+There were no unsolved problems on deployment of MVP, but I generally feel like there were too many stretch goal features that I wanted to include and not enough time to implement them all. Major hurdles I'd like to reflect back on though were picking up a new CSS framework and using Sequelize's "onDelete: cascade" on join tables. I was considering dropping Tailwind CSS in the middle of learning it in favor of a UI kit to save time. In the end, I stuck with Tailwind and it's documentation page stuck with me. On my browser tabs. For the rest of the project. Anyways, I'm glad to have learned a CSS framework that gives me more control and will be helpful in my future endeavors. The other point of stagnation was due to Sequelize's "onDelete: cascade" not behaving like I expected or wanted in scenarios related to join tables. After a few hours of searching and experimentation, I fell back to a less efficient way of manually cleaning up references to deleted records. What I learned about myself is that, while I feel like my project development is slower than I'd like, I'm proud of how I utilize that time to ensure each new feature is as robust and refined as I can make them.
+
+## Sources
+
+* Image assets from freepik.com
