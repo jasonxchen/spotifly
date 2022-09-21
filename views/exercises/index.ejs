@@ -1,5 +1,5 @@
-<div class="flex flex-col justify-center mx-2 max-w-full">
-    <h2 class="text-2xl mt-2 md:mx-auto md:w-6/12 max-w-full px-2">List of exercises from wger Workout Manager:</h2>
+<div class="flex flex-col justify-center mx-2 mt-3 mb-5 max-w-full">
+    <h2 class="text-2xl md:mx-auto md:w-6/12 max-w-full px-2">List of exercises from wger Workout Manager:</h2>
 
     <form action="/exercises" method="GET">
         <div class="flex justify-center mt-2 mb-1 md:mx-auto md:w-6/12 max-w-full">
@@ -61,7 +61,7 @@
             <% } %>
         </div>
     <% }) %>
-    <div class ="flex justify-end gap-x-2 mt-1 mb-4 p-1 md:mx-auto md:w-6/12 max-w-full">
+    <div class ="flex justify-end gap-x-2 mt-1 p-1 md:mx-auto md:w-6/12 max-w-full">
         <% if (!page) { %>
             <% // URLs without page numbers pass in a null page variable (no pagination for search page) %>
         <% } else if (page <= 1) { %>
