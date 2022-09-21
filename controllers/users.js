@@ -156,6 +156,11 @@ router.delete("/:userId", async (req, res) => {
                 })
                 await routine.destroy();
             })
+            // delete all notes associated with user to be deleted
+            const notes = await db.note.findAll({where: {userId: user.id}});
+            notes.forEach(async (note) => {
+                await note.destroy();
+            })
             await user.destroy();
             res.redirect("/");
         }

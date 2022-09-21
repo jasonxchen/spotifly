@@ -60,6 +60,7 @@
 | GET         | `/exercises` | READ   | render exercises from search result |
 | *GET         | `/exercises/:exerciseId` | READ    | render exercise details page  |
 | POST | `/exercises` | CREATE | create new exercise in db using API data |
+| PUT | `/notes/:noteId` | UPDATE | update note in database |
 *=stretch goal
 
 ## API
@@ -135,7 +136,7 @@ Thanks to Node.js this web application runs off an Express.js server with a Post
 * [x] Search for exercises from API results
 * [x] Allow pagination of exercises on exercises/index.ejs view to cut down on API request time
 * [x] Add About page and other links
-* [ ] Add option to write notes on each exercise in routine
+* [x] Add option to edit notes on each exercise in routine
 * [ ] Save other users' routines to your own (make a copy)
 * [ ] Implement more search categories (e.g. by routine titles)
 * [ ] Use modals instead of /new and /edit pages

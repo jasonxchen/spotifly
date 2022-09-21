@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.routine.belongsTo(models.user);
       models.routine.belongsToMany(models.exercise, {through: "routines_exercises"});
+      models.routine.hasMany(models.note);
     }
   }
   routine.init({

@@ -1,5 +1,6 @@
 const express = require("express");
 const db = require("../models");
+const { Op } = require("sequelize");
 const router = express.Router();
 
 // GET /routines/new - form to create a new routine
@@ -23,8 +24,9 @@ router.get("/new", async (req, res) => {
 // GET /routines/:routineId
 router.get("/:routineId", async (req, res) => {
     try {
-        const routine = await db.routine.findByPk(req.params.routineId, {include: [db.user, db.exercise]});
-        res.render("routines/details.ejs", {routine});
+        const routine = await db.routine.findByPk(req.params.routineId, {include: [db.exercise]});
+        const routineOwner = await db.user.findByPk(routine.userId, {include: [db.note]});
+        res.render("routines/details.ejs", {routine, routineOwner});
     } catch (error) {
         console.warn(error);
         res.send("server error");
@@ -107,6 +109,11 @@ router.delete("/:routineId", async (req, res) => {
             routinesExercises.forEach(async (record) => {
                 await record.destroy();
             })
+            // delete all notes associated with routine to be deleted
+            const notes = await db.note.findAll({where: {routineId: routine.id}});
+            notes.forEach(async (note) => {
+                await note.destroy();
+            })
             await routine.destroy();
             res.redirect(`/users/${res.locals.user.username}`);
         }
@@ -126,6 +133,13 @@ router.delete("/:routineId/exercises/:exerciseId", async (req, res) => {
         }
         else {
             const exercise = await db.exercise.findByPk(req.params.exerciseId);
+            // delete note associated with the exercise to remove
+            const note = await db.note.findOne({
+                where: {
+                    [Op.and]: [{routineId: routine.id}, {exerciseId: exercise.id}]
+                }
+            })
+            await note.destroy();
             await routine.removeExercise(exercise);
             // manually change updatedAt for routine ordering purposes
             routine.changed("updatedAt", true)

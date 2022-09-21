@@ -2,7 +2,7 @@
     <div class ="bg-white mt-3 border rounded-lg p-3 md:mx-auto md:w-6/12 max-w-full">
         <h2 class="inline text-xl font-bold"><%= routine.title %></h2>
         <h2 class="inline">
-            by <a href="/users/<%= routine.user.username %>" class="hover:underline"><%= routine.user.username %></a>
+            by <a href="/users/<%= routineOwner.username %>" class="hover:underline"><%= routineOwner.username %></a>
         </h2>
         <p class="block text-sm text-gray-500 text-clip"><%= routine.description %></p>
 
@@ -17,9 +17,27 @@
         <hr class="mt-4">
 
         <% routine.exercises.forEach(exercise => { %>
+            <% // get unique note from user for this exercise %>
+            <% let associatedNote = null; %>
+            <% routineOwner.notes.forEach(note => { %>
+                <% if (note.exerciseId === exercise.id && note.routineId === routine.id) { %>
+                    <% associatedNote = note; %>
+                <% } %>
+            <% }) %>
             <div class="mt-4">
                 <h4 class="inline font-bold"><%= exercise.name %></h4>
-                <p class="block text-sm text-gray-500 text-clip"><%= exercise.description %></p>
+                <% // allow changing note for owner of routine %>
+                <% if (user && user.id === routine.userId) { %>
+                    <form action="/notes/<%= associatedNote.id %>/?_method=PUT" method="POST">
+                        <div class="flex flex-col">
+                            <label for="note-input">Note:</label>
+                            <textarea id="note-input" type="text" name="noteText" rows="2" class="mt-1 border rounded px-2 py-1 text-sm text-gray-500"><%= associatedNote.text %></textarea>
+                        </div>
+                        <button type="submit" class="my-1 px-2 py-1 bg-blue-500 rounded text-white text-sm w-full">Update</button>
+                    </form>
+                <% } else { %>
+                    <p class="block text-sm text-gray-500 text-clip"><%= associatedNote.text %></p>
+                <% } %>
                 <p>Muscle group: <%= exercise.category %></p>
                 <p>Equipment needed: <%= exercise.equipment %></p>
                 <% // only show remove button for owner %>

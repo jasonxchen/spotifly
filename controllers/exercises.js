@@ -84,6 +84,13 @@ router.post("/", async (req, res) => {
             // manually change updatedAt for routine ordering purposes
             routine.changed("updatedAt", true)
             await routine.update({updatedAt: new Date()})
+            // create a note with default text being from the API
+            const note = await db.note.create({
+                text: exerciseDesc,
+                userId: res.locals.user.id,
+                routineId: routine.id,
+                exerciseId: exerciseId
+            })
             res.redirect(`/routines/${routine.id}`);
         }
     } 
