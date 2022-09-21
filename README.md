@@ -114,6 +114,7 @@ Thanks to Node.js this web application runs off an Express.js server with a Post
 * Run `npm install` to install dependencies
 * Run `sequelize db:create` to create the development database
 * Run `sequelize db:migrate` to migrate the models into the database
+* Run `touch .env` and add an `ENC_SECRET="[SECRET_KEY_HERE]"` to set the secret local encryption key
 * Ensure nodemon is installed globally
     * If not, run `npm install -g nodemon` (or `npm install --save-dev nodemon` for local installation)
 * Run `nodemon` to start the application (or `npx nodemon` for local installations)
