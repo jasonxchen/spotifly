@@ -2,7 +2,7 @@
 
 "Can you spot me?" Get used to asking that when you head to the gym with your new workout routines. Use Spotifly to create your own exercise "playlists" and share them with others.
 
-[→ Access the web app here! ←](https://spotifly-jasonxchen.koyeb.app/)
+[→ Access the web app here! ←](https://spotifly.fly.dev/)
 
 ## User Stories
 
@@ -12,7 +12,7 @@
 * As a user, I want to explore a list of routines made by other users that I can try out.
 * As a user, I want to save routines from others that stand out to me.
 
-## Wireframes
+## Initial Wireframes
 
 "/" route
 ![Home Wireframe](./img/Home-Wireframe.png)
@@ -108,16 +108,19 @@ app.listen(PORT, () => {
 
 Thanks to Node.js this web application runs off an Express.js server with a PostgreSQL database system. The HTTP requests Express recieves goes through logic written in JavaScript and interacts with the database via Sequelize. Depending on the request, certain views are shown to the user with the help of  EJS rendering coupled with styling from Tailwind CSS element classes.
 
+The live web app has database models and records stored on Supabase and is deployed with fly.io
+
 ## Development Environment Installation Instructions
 
 * Fork and clone this repository
-* Run `npm install` to install dependencies
+* Run `npm install` on local repo to install dependencies
 * Run `sequelize db:create` to create the development database
 * Run `sequelize db:migrate` to migrate the models into the database
 * Run `touch .env` and add an `ENC_SECRET="[SECRET_KEY_HERE]"` to set the secret local encryption key
 * Ensure nodemon is installed globally
     * If not, run `npm install -g nodemon` (or `npm install --save-dev nodemon` for local installation)
 * Run `nodemon` to start the application (or `npx nodemon` for local installations)
+* Navigate to http://localhost:3000/ to interact with the web app
 
 ## Minimum Viable Product (MVP) Goals
 
@@ -140,7 +143,10 @@ Thanks to Node.js this web application runs off an Express.js server with a Post
 * [x] Add option to edit notes on each exercise in routine
 * [ ] Change color on hover for every button
 * [ ] Add option to reorder exercises in routines
+* [ ] Add seed files
 * [ ] Save other users' routines to your own (make a copy)
+* [ ] Allow users to make their own exercises
+* [ ] Chat or comment feature
 * [ ] Implement more search categories (e.g. by routine titles)
 * [ ] Use modals instead of /new and /edit pages
 * [ ] Add confirmation for deletes and removes
